@@ -1,0 +1,291 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/banner/slider2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+/************* NAVBAR SECTION *************/
+nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    height: 80px;
+    line-height: 80px;
+    position: fixed;
+    top: 0;
+    z-index: 111;
+    background: #f1f1f1;
+    /* border: 1px solid red; */
+}
+
+nav .logo {
+    display: flex;
+    font-size: 30px;
+    font-weight: 800;
+    color: #3d535f;
+    letter-spacing: 3px;
+    cursor: pointer;
+    position: relative;
+    /* text-transform: uppercase; */
+}
+
+nav .logo span {
+    color: #7f00ff;
+}
+
+nav .nav-items {
+    display: flex;
+    margin-left: -30px;
+}
+
+nav .nav-items li {
+    list-style: none;
+    margin: 0 15px;
+}
+
+nav .nav-items li a {
+    text-decoration: none;
+    color: #3d535f;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 5px;
+    /* border: 1px solid red; */
+
+}
+
+nav .nav-items li:hover a {
+    color: #fff;
+    background-color: #7f00ff;
+    border-radius: 10px;
+}
+
+nav .links {
+    display: flex;
+}
+
+nav .links h4 {
+    font-size: 20px;
+    color: #7f00ff;
+}
+
+nav .links a {
+    font-size: 25px;
+    color: #3d535f;
+    margin: 0px 13px;
+    padding: 2px 5px;
+    /* border: 1px solid red; */
+    /* background: #7f00ff; */
+    text-decoration: none;
+}
+
+nav .links a.user {
+    color: #fff;
+}
+
+nav .links a:hover,
+nav .links h4:hover {
+    color: #7f00ff;
+    /* background: #7f00ff; */
+}
+
+nav .links a.user:hover {
+    color: #7f00ff;
+}
+
+.checkbtn {
+    font-size: 30px;
+    display: none;
+    color: black;
+    margin-right: 40px;
+    cursor: pointer;
+
+}
+
+#check {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    nav .links a {
+        display: none
+    }
+
+
+}
+
+@media screen and (max-width: 900px) {
+    nav .nav-items {
+        background: #9456d3;
+        flex-direction: column;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        left: -100%;
+        top: 80px;
+        text-align: center;
+        transition: .3s ease-in;
+
+    }
+
+    .checkbtn {
+        display: block;
+    }
+
+    nav {
+        background: black;
+    }
+
+    nav .nav-items li a {
+        color: white;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    nav .links a {
+        display: block;
+    }
+
+    .social {
+        display: flex;
+        justify-content: center;
+    }
+
+    nav .links a:hover,
+    nav .links h4:hover {
+        color: white;
+        /* background: #7f00ff; */
+    }
+
+    nav .links h4 {
+        color: white;
+    }
+
+}
+
+/********** HEADING ***************/
+.heading{
+    position: relative;
+    top: 90px;
+    color: #fff;
+}
+
+.register-heading{
+    position: relative;
+    top: 100px;
+    text-align: center;
+    color: #fff;
+}
+
+/***************** FORMS ******************/
+.wrapper {
+    /* display: flex; */
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, #7f00ff, pink);
+    padding: 10px;
+    border-radius: 20px;
+}
+.wrapper.register{
+    position: absolute;
+    top: 60%;
+    height: 400px;
+}
+.wrapper h1 {
+    text-align: center;
+}
+.wrapper.block {
+    display: block;
+    background-color: transparent;
+    text-align: center;
+}
+
+.wrapper.block h1 {
+    color: #fff;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.wrapper.block .btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 2px solid #000;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    color: #000;
+}
+
+.wrapper.block .btn:hover {
+    background-color: rgb(191, 0, 0);
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.wrapper .form {
+    display: block;
+    padding: 30px;
+}
+.register .form{
+    margin-right: 20px;
+}
+.form .input {
+    margin: 10px;
+}
+
+.form .input input,
+.form .input button {
+    padding: 10px 15px;
+    width: 200px;
+    background-color: #fff;
+    border: 3px solid #000;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+ 
+.form .msg {
+    border: 2px solid rgb(191, 0, 0);
+    background-color: rgba(191, 0, 0, 0.5);
+    padding: 10px 15px;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    border-radius: 30px;
+    display: none;
+}
+
+.form button {
+    text-align: center;
+}
+
+.form button:hover {
+    background-color: rgb(0, 191, 60);
+    color: #fff;
+    border: 2px solid #fff;
+}
+.wrapper .link {
+    margin: 20px;
+    text-align: center;
+}
