@@ -1,18 +1,18 @@
 <?php
     session_start();
-    
-    if($_SESSION['id'] == true){
+
+    if($_SESSION['access'] == 1){
         if(isset($_GET["id"])){
             $id = $_GET["id"];
 
             // Database Connection
             require_once('../config.php');
-            $sql = mysqli_query($db,"DELETE FROM `teams` WHERE id=$id");
+            $sql = mysqli_query($db,"DELETE FROM `users` WHERE id=$id");
         }
         header("location: index.php");
-        exit; 
-    }
+        exit;
+    } 
     else{
-        header('Location: ../../index.php');
+        header('Location: index.php');
     }
 ?>

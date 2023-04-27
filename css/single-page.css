@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap');
+*{ 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+html{ 
+    scroll-behavior: smooth;
+}
+
+/* GLobal Classes */
+.heading{
+    text-align: center;
+    font-size: 45px;
+    padding: 20px;
+    margin: 15px;
+    color: #3d535f;
+}
+.heading span{
+    color: #7f00ff;
+}
+
+/***************** PROJECTS SECTION *******************/
+.projects{
+    background: #f3f5f8;
+    padding: 150px;
+}
+.projects .project-banner{
+    display: flex;
+    flex-wrap: wrap;
+}
+.projects .project-banner h1{
+    float: right;
+    width: 50%;
+    margin-left: 100px;
+    font-size: 80px;
+    color: #3d535f;
+}
+.projects .project-banner h1 span{
+    color: #7f00ff;
+}
+.projects .project-banner h1 .title{
+    color: #7f00ff;
+}
+.projects .project span img{
+    float: left;
+    height: 450px;
+    width: 450px;
+    border-radius: 10%;
+    box-shadow: 0 0 20px 9px rgba(163, 20, 211, 0.813);
+}
+.projects .description{
+    padding: 10px;
+    margin: 25px 0px;
+}
+.projects .project p{
+    color: #000;
+    line-height: 1.5;
+}
+.projects .project .date{
+    margin: 15px;
+}
+.projects .project .developer{
+    margin: 15px;
+}
+.projects .project h3{
+    color: #3d535f;
+}
+.projects .button{
+    float: left;
+    margin-top: 10px;
+}
+.projects .button a {
+    background-color: #7f00ff;
+    color: #f1f1f1;
+    padding: 10px 35px;
+    text-decoration: none;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+}
+.projects .button a:hover {
+    background: linear-gradient(to right, #803fd6, #da38ec);
+    color: #fff;
+}

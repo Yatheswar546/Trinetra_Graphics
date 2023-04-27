@@ -1,24 +1,38 @@
-<?php
+<?php  
 	require 'config.php';
-	if(isset($_POST["submit2"])){
+
+    session_start();
+
+    $errormsg = "";
+    $successmsg = ""; 
+
+	if(isset($_POST["submit2"])){ 
 		$username_email = $_POST["username_email"];
 		$password = $_POST["password"];
-		$result  = mysqli_query($conn,"SELECT * FROM forms WHERE username = '$username_email' OR email = '$username_email'");
+		$result  = mysqli_query($db,"SELECT * FROM users WHERE username = '$username_email' OR email = '$username_email'");
 		$row = mysqli_fetch_assoc($result);
+        // print_r($row);
 		if(mysqli_num_rows($result) > 0){
 			if($password == $row["password"]){
-				$_SESSION["login"] = true;
-				$_SESSION["id"] = $row["id"];
-				header("location: index1.php");
-				echo "<script> alert('Login Successful'); </script>";
+				// $_SESSION["login"] = true;
+				$_SESSION['id'] = $row["id"];
+                $_SESSION['image'] = $row["image"];
+                $_SESSION['role'] = $row["role"];
+                if($_SESSION['role'] == 'Admin'){
+                    $_SESSION['access'] = true;
+                }
+                else{
+                    $_SESSION['access'] = false;
+                }
+				header("location: ./admin-panel/admin.php");
 			}
 			else{
-				echo "<script> alert('Wrong Password'); </script>";
-			}
+                $errormsg = "Wrong Password";
+            }
 		} 
 		else{
-			echo "<script> alert('User Not Resgister'); </script>";
-		}
+            $errormsg = "User Not Resgister";
+        }
 	}
 ?>
 
@@ -45,29 +59,27 @@
 </head>
 <body>
     <!------------ NAVBAR SECTION ------------->
-        <nav>
-            <div class="logo"><span>T</span>rinetra &nbsp;<span>G</span>raphics</div>
-            <ul class="nav-items" id="items-nav">
-                <li><a href="./index.php">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#team">Team</a></li>
-                <div class="links">
-                    <a href="#contact"><h4>Contact Us: 9704573187</h4></a>
-                    <div class="social"> <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a></div>
-                        <!-- <a href="./forms.html" class="user"><i class="fa-solid fa-user"></i></a> -->
-                        <!-- <a href="./logout.php"><p style="color:red;">Logout</p></a> -->
-                </div>
-            </ul>
-          
-            <input type="checkbox" id="check" onclick="checkbox()">
-            <label for="check" class="checkbtn">
-                <i class="fas fa-bars"></i>
-            </label>
-        </nav>  
+    <nav>
+        <div class="logo"><span>T</span>rinetra &nbsp;<span>G</span>raphics</div>
+        <ul class="nav-items" id="items-nav">
+            <li><a href="./index.php">Home</a></li>
+            <li><a href="./index.php#about">About</a></li>
+            <li><a href="./index.php#services">Services</a></li>
+            <li><a href="./index.php#projects">Projects</a></li>
+            <li><a href="./index.php#team">Team</a></li>
+            <div class="links">
+                <a href="./index.php#contact"><h4>Contact Us: 9704573187</h4></a>
+                <div class="social"> <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a></div>
+            </div>
+        </ul>
+      
+        <input type="checkbox" id="check" onclick="checkbox()">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+    </nav>
 
     <!------------- HEADING ---------------->
     <div class="heading">
@@ -77,10 +89,18 @@
     <!-------------- FORM --------------->
     <div class="wrapper">
         <h1>Login Form</h1>
-        <form class="form" method="post" autocomplete="off">
-            <!-- <div class="msg">
-                 Hii ra Ravi mama 
-            </div> -->
+        
+        <?php 
+            if(!empty($errormsg)){
+                echo "
+                    <div class='error_msg'>
+                        <strong>$errormsg</strong>
+                    </div>
+                ";
+            }
+        ?>
+
+        <form class="form" method="post">
             <div class="input">
                 <input type="text" name="username_email" id="username_email" placeholder="Enter Email">
             </div>
@@ -88,11 +108,7 @@
                 <input type="password" name="password" id="password" placeholder="Enter Password">
             </div>
             <div class="input" >
-                <!-- <input type="submit" name="" id="" value="Login Now" style="margin-left:20px;"> -->
                 <button type="submit" name="submit2">Login Now</button>
-            </div>
-            <div class="link">
-                <a href="./register.php">If you're not a user ? Register</a>
             </div>
         </form>
     </div>

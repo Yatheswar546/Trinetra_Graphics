@@ -1,10 +1,18 @@
 <?php
-    if(isset($_GET["id"])){
-        $id = $_GET["id"];
+    session_start();
 
-        $db = mysqli_connect('localhost','root','','graphic');
-        $sql = mysqli_query($db,"DELETE FROM `projects` WHERE id=$id");
+    if($_SESSION['id'] == true){
+        if(isset($_GET["id"])){
+            $id = $_GET["id"];
+
+            // Database Connection
+            require_once('../config.php');
+            $sql = mysqli_query($db,"DELETE FROM `projects` WHERE id=$id");
+        }
+        header("location: index.php");
+        exit; 
     }
-    header("location: index.php");
-    exit; 
+    else{
+        header("Location: ../../index.php");
+    }
 ?>

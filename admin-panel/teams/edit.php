@@ -1,6 +1,9 @@
  <?php 
-    
-    $db = mysqli_connect('localhost','root','','graphic');
+    session_start();
+    if($_SESSION['id'] == true){
+
+    // Database Connection
+    require_once('../config.php');
 
     $id = "";
     $username = "";
@@ -22,7 +25,7 @@
 
         $id = $_GET["id"];
         // Read the Data
-        $result = mysqli_query($db,"SELECT * FROM `users` WHERE id=$id");
+        $result = mysqli_query($db,"SELECT * FROM `teams` WHERE id=$id");
         $row = $result->fetch_assoc();
 
         if(!$row){
@@ -44,7 +47,7 @@
         $phone = $_POST['phone'];
         $body = $_POST['body']; 
         $role = $_POST['role'];
-        $target = "../data_base-images/";
+        $target = "../data_base-images/teams/";
         $filename = $_FILES['image']['name'];
         $filetype = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION)); // filetype
         $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype); //target path
@@ -57,7 +60,7 @@
                 break;
             }
             else{
-                $result = mysqli_query($db,"UPDATE `users` SET `name`='$username',`email`='$email',`phoneno`='$phone',`description`='$body',`image`='$file',`teamid`='$teamid',`role`='$role' WHERE id=$id");
+                $result = mysqli_query($db,"UPDATE `teams` SET `name`='$username',`email`='$email',`phoneno`='$phone',`description`='$body',`image`='$file',`teamid`='$teamid',`role`='$role' WHERE id=$id");
 
                 if(!$result){
                     $errormsg = "Invalid Query...".mysqli_connect_error();
@@ -104,7 +107,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home' ></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -139,14 +142,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -169,7 +178,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -209,7 +218,7 @@
                     </div>
                     <div>
                         <label>Description</label>
-                        <input type="text" name="body" id="body" class="text-input" value="<?php echo $body; ?>">
+                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
                     </div>
                     <div>
                         <label>Image</label>
@@ -246,6 +255,11 @@
         </div>
     </div>
 
+    <!----- CkEditor 5 Script -------------------->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+
+    <!-- Custom Js Script -->
+    <script src="../../js/admin.js"></script>
 
     <script>
         //MenuToggle
@@ -269,3 +283,10 @@
     </script>
 </body>
 </html>
+
+<?php 
+    }
+    else{
+        header("Location: ../../index.php");
+    }
+?>

@@ -1,6 +1,9 @@
 <?php
-
-    $db = mysqli_connect('localhost','root','','graphic');
+    session_start();
+    if($_SESSION['id'] == true){
+        
+    // Database Connection
+    require_once('../config.php');
 
     $title = ""; 
     $body = ""; 
@@ -9,10 +12,11 @@
 
     $errormsg = "";
     $successmsg = "";
+    
 
     if( $_SERVER['REQUEST_METHOD'] == 'POST'){
         $title = $_POST['title'];
-	    $body = $_POST['body'];
+	    $body = addslashes($_POST['body']);
         $price = $_POST['price'];   
         $symbol = $db->real_escape_string($_POST['symbol']); 
         $serviceid = md5(substr($title,0,3).substr($body,0,3).random_int(10000,99999));
@@ -77,7 +81,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home' ></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -112,14 +116,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -142,7 +152,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -173,7 +183,7 @@
                     </div>
                     <div>
                         <label>Description</label>
-                        <input type="text" name="body" id="body" class="text-input" value="<?php echo $body; ?>">
+                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
                     </div>
                     <div>
                         <label>Price</label>
@@ -203,6 +213,12 @@
         </div>
     </div>
 
+    <!----- CkEditor 5 Script -------------------->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+
+    <!-- Custom Js Script -->
+    <script src="../../js/admin.js"></script>
+
 
     <script>
         //MenuToggle
@@ -226,3 +242,10 @@
     </script>
 </body>
 </html>
+
+<?php
+    }
+    else{
+        header("Location: ../../index.php");
+    }
+?>

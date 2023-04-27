@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if($_SESSION['id'] == true){
+    if($_SESSION['access'] == 1){
 
     // Database Connection
     require_once('../config.php');
@@ -8,7 +8,6 @@
     $username = "";
     $email = "";
     $phone = "";
-    $body = "";
     $file = "";
     $role = "";
 
@@ -19,26 +18,32 @@
         $username = $_POST['username'];
 	    $email = $_POST['email'];
         $phone = $_POST['phone'];
-        $body = $_POST['body']; 
         $role = $_POST['role'];
-        $target = "../data_base-images/teams/";
+        $password = $_POST["password"];
+        
+        $target = "../data_base-images/users/";
         $filename = $_FILES['image']['name'];
         $filetype = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION)); // filetype
-        $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype); //target final path
+        $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype); //target path
         $file = md5("userid".$_FILES['image']['name']).".".$filetype; // file created
-        $teamid = md5(substr($username,0,3).substr($email,0,3).random_int(10000,99999));
- 
+
+        $duplicate = mysqli_query($db,"SELECT * FROM users WHERE username = '$username' OR email = '$email'");
+
         do{
-            if( empty($username) || empty($email) || empty($phone) || empty($body) || empty($file)){
+            if(mysqli_num_rows($duplicate) > 0){
+                // echo "<script> alert('Username or Email Has Already Taken'); </script>";
+                $errormsg = "Username or Email Has Already Exists";
+            }
+            elseif( empty($username) || empty($email) || empty($phone) || empty($role) || empty($password) || empty($file)){
                 $errormsg = "All Fields are required !!!";
                 break;
             }
             else{
                 if($filetype == "png" || $filetype == "jpg" || $filetype == "jpeg"){
                     if(move_uploaded_file($_FILES['image']['tmp_name'],$target_file)){
-                        $sql = mysqli_query($db,"INSERT INTO `teams`(`name`, `email`, `phoneno`, `description`, `image`, `teamid`, `role`) VALUES ('$username','$email','$phone','$body','$file','$teamid','$role')");
+                        $sql = mysqli_query($db,"INSERT INTO `users`(`username`, `email`, `password`, `phoneno`, `image`, `role`) VALUES ('$username','$email', '$password', '$phone','$file','$role')");
                         if($sql){
-                            $successmsg = "You have successfully Added a Team Member";
+                            $successmsg = "You have successfully Added a User";
                             header("Location: index.php");
                             exit;
                         } 
@@ -165,12 +170,12 @@
         <!-- Admin Content -->
         <div class="admin-content">
             <div class="button-group">
-                <a href="./create.php" class="admin-btn btn-blg">Add Member</a>
-                <a href="./index.php" class="admin-btn btn-blg">Manage Teams</a>
-            </div>
+                <a href="./create.php" class="admin-btn btn-blg">Add User</a>
+                <a href="./index.php" class="admin-btn btn-blg">Manage Users</a>
+            </div> 
 
             <div class="content"> 
-                <h2 class="page-title">Add Team Member</h2>
+                <h2 class="page-title">Add User</h2>
 
                 <?php 
                     if(!empty($errormsg)){
@@ -187,7 +192,7 @@
                         <label>Name</label>
                         <input type="text" name="username" class="text-input" value="<?php echo $username; ?>">
                     </div>
-                    <div> 
+                    <div>  
                         <label>Email</label>
                         <input type="email" name="email" class="text-input" value="<?php echo $email; ?>">
                     </div>
@@ -196,21 +201,19 @@
                         <input type="text" name="phone" class="text-input" value="<?php echo $phone; ?>">
                     </div>
                     <div>
-                        <label>Description</label> 
-                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
-                    </div>
-                    <div>
                         <label>Image</label>
                         <input type="file" name="image" class="text-input" value="<?php echo $file; ?>">
                     </div>
                     <div>
                         <label>Role</label>
                         <select name="role" class="text-input" value="<?php echo $role; ?>">
-                            <option value="Developer">Developer</option>
-                            <option value="Grpahic Designer">Grpahic Designer</option>
-                            <option value="Video Editor">Video Editor</option>
-                            <option value="Animator">Animator</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
                         </select>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter Password">
                     </div>
 
                     <?php 
@@ -224,7 +227,7 @@
                     ?>
 
                     <div>
-                        <button type="submit" class="admin-btn btn-blg">Add Member</button>
+                        <button type="submit" class="admin-btn btn-blg">Add User</button>
                         <a href="./index.php" class="admin-btn btn-blg">Cancel</a>
                     </div>
                 </form>
@@ -234,11 +237,6 @@
         </div>
     </div>
 
-    <!----- CkEditor 5 Script -------------------->
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
-
-    <!-- Custom Js Script -->
-    <script src="../../js/admin.js"></script>
 
     <script>
         //MenuToggle
@@ -266,6 +264,6 @@
 <?php
     }
     else{
-        header("Location: ../../index.php");
+        header("Location: ./index.php");
     }
 ?>

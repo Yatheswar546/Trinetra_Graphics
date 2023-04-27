@@ -110,17 +110,17 @@
         <!-------------- Admin Content ------------------------------>
         <div class="admin-content">
             <div class="button-group">
-                <a href="./create.php" class="admin-btn btn-blg">Add Teams</a>
-                <a href="./index.php" class="admin-btn btn-blg">Manage Teams</a>
+                <a href="./create.php" class="admin-btn btn-blg">Add User</a>
+                <a href="./index.php" class="admin-btn btn-blg">Manage Users</a>
             </div>
 
             <div class="content">
-                <h2 class="page-title">Manage Teams</h2>
+                <h2 class="page-title">Manage Users</h2>
  
                 <table>
                     <thead>
                         <th>S. No.</th>
-                        <th>Name</th>
+                        <th>Username</th>
                         <th>Role</th>
                         <th>Pic</th>
                         <th>Phone No.</th>
@@ -140,21 +140,35 @@
                             }
 
                             // read the data from teams table
-                            $result = mysqli_query($db,"SELECT * FROM `teams`");
+                            $result = mysqli_query($db,"SELECT * FROM `users`");
+                            // all records/rows
+
 
                             if(!$result){
                                 die("Invalid Query !!!".mysqli_connect_error());
-                            } 
+                            }
                             else{
                                 // read data of each row ; 
                                 // $row = $result->fetch_assoc()
+                                // each row
+                                /*
+                                {   id => 1, 
+                                    username => naga, 
+                                    email => naga@gmail, 
+                                    image => file,
+                                    row => user,
+                                    phone => 587964130,
+                                    createdat => 2023-03-22 12:42:06
+                                }
+
+                                */
                                 while($row = mysqli_fetch_assoc($result)){
                                     echo "
                                     <tr>
                                         <td>$row[id]</td>
-                                        <td>$row[name]</td>
+                                        <td>$row[username]</td>
                                         <td>$row[role]</td>
-                                        <td><img src='../data_base-images/teams/$row[image]'></td>
+                                        <td><img src='../data_base-images/users/$row[image]'></td>
                                         <td>$row[phoneno]</td>
                                         <td><a href='./edit.php?id=$row[id]' class='edit'>Edit</a></td>
                                         <td><a href='./delete.php?id=$row[id]' class='delete'>Delete</a></td>
@@ -170,7 +184,6 @@
         </div>
 
     </div>
-
  
     <script>
         //MenuToggle

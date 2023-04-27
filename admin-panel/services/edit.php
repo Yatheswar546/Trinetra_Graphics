@@ -1,6 +1,9 @@
 <?php 
-
-    $db = mysqli_connect('localhost','root','','graphic');
+    session_start();
+    if($_SESSION['id'] == true){
+        
+    // Database Connection
+    require_once('../config.php');
  
     $id = "";
     $title = "";
@@ -44,7 +47,7 @@
         do{
             if(empty($id) || empty($title) || empty($body) || empty($price) || empty($symbol)){
                 $errormsg = "All Fields are required !!!";
-                break;
+                break; 
             }
             else{
                 $result = mysqli_query($db,"UPDATE `service` SET `name`='$title',`description`='$body',`price`='$price', `symbol`='$symbol', `serviceid`='$serviceid' WHERE id = $id");
@@ -93,7 +96,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home' ></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -128,14 +131,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -158,7 +167,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -181,6 +190,7 @@
                         ";
                     }
                 ?>
+                
                 <form method="post">
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div> 
@@ -189,7 +199,7 @@
                     </div>
                     <div>
                         <label>Description</label>
-                        <input type="text" name="body" id="title" class="text-input" value="<?php echo $body; ?>">
+                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
                     </div>
                     <div>
                         <label>Price</label>
@@ -218,6 +228,12 @@
         </div>
     </div>
 
+    <!----- CkEditor 5 Script -------------------->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+
+    <!-- Custom Js Script -->
+    <script src="../../js/admin.js"></script>
+
 
     <script>
         //MenuToggle
@@ -241,3 +257,10 @@
     </script>
 </body>
 </html>
+
+<?php
+    }
+    else{
+        header("Location: ../../index.php");
+    }
+?>

@@ -1,3 +1,19 @@
+<?php
+    session_start();
+
+    // Database Connection
+    // $db = mysqli_connect('localhost','root','','graphic');
+    require('config.php');
+
+    // Check Connection
+    if(!$db){
+        die("Connection Failed".mysqli_connect_error());
+    }
+    else{
+        // echo "Connection Successful.....";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +43,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
- 
+
 <body>
     <!------------------- NAVBAR SECTION ---------------->
     <div class="banner-container">
@@ -37,15 +53,20 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li> 
-                <li><a href="#projects">Projects</a></li>
+                <li><a href="./projects.php">Projects</a></li>
                 <li><a href="#team">Team</a></li>
                 <div class="links">
                     <a href="#contact"><h4>Contact Us: 9704573187</h4></a>
                     <div class="social"> <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#"><i class="fa-brands fa-whatsapp"></i></a></div>
-                        <a href="./login.php" class="user"><i class="fa-solid fa-user"></i></a>
-                </div>
+                        <?php if(isset($_SESSION['id'])): ?>
+                            <a href="./admin-panel/admin.php"><i class="fa-solid fa-user"></i></a>
+                            <a href="./logout.php"><p style="color:red;">Logout</p></a>
+                        <?php else: ?> 
+                            <a href="./login.php" class="user">Login</a>
+                        <?php endif; ?>
+                </div> 
             </ul>
             <input type="checkbox" id="check" onclick="checkbox()">
             <label for="check" class="checkbtn">
@@ -64,7 +85,7 @@
                     <button class="btn">Know More</button>
                     <a href="#contact"><button class="btn">Contact Us</button></a>
                 </div>
-            </div>
+            </div> 
             <div class="cols cols1">
                 <div class="slider">
                     <img src="./images/banner/slider1.jpg" alt="">
@@ -74,43 +95,6 @@
             </div>
         </div>
     </div>
-
-    <!---------------- RECENT PROJECTS --------------------->
-    <section class="recent-projects">
-        <h1 class="heading"> <span>R</span>ecent <span>P</span>rojects</h1>
-        <div class="project-cards">
-            <article>
-                <div class="project-image">
-                    <img src="./images/projects/project1.png" alt="">
-                </div>
-                <h4>3D Project</h4>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                    saepe? Reiciendis vel ullam dolore?
-                </p>
-                <a href="#" class="btn">More Info</a>
-            </article>
-            <article>
-                <div class="project-image">
-                    <img src="./images/projects/project1.png" alt="">
-                </div>
-                <h4>3D Project</h4>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                    saepe? Reiciendis vel ullam dolore?
-                </p>
-                <a href="#" class="btn">More Info</a>
-            </article>
-            <article>
-                <div class="project-image">
-                    <img src="./images/projects/project1.png" alt="">
-                </div>
-                <h4>3D Project</h4>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                    saepe? Reiciendis vel ullam dolore?
-                </p>
-                <a href="#" class="btn">More Info</a>
-            </article>
-        </div>
-    </section>
 
     <!----------------------------------- ABOUT SECTION -------------------------->
     <section class="about-section" id="about">
@@ -155,17 +139,6 @@
 
             <div class="content-box">
                 <?php
-                    // Create Connection
-                    $db = mysqli_connect('localhost','root','','graphic');
-
-                    // Check Connection
-                    if(!$db){
-                        die("Connection Failed!!!".mysqli_connect_error());
-                    }
-                    else{
-                        // echo "Connected Successfully...";
-                    }
-
                     // read all data from database services table
                     $services = mysqli_query($db, "SELECT * FROM `service`");
 
@@ -176,270 +149,53 @@
                         // read data from the table
                         while($row = mysqli_fetch_assoc($services)){
                             echo"
-                            <div class='card'>
-                                $row[symbol];
+                            <div class='card'> 
+                                $row[symbol]
                                 <h2>$row[name]</h2>
                                 <p>$row[description]</p>
+                                <p>$row[price]</p>
                             </div>
                             ";
                         }
                     }
                 ?>
-                <!-- <div class="card">
-                    <i class='bx bx-bookmarks'></i>
-                    <h2>Brochures, rack cards & booklets</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div>
-                <div class="card">
-                    <i class='bx bxs-envelope-open'></i>
-                    <h2>Business cards, letterhead & envelopes</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div>
-                <div class="card">
-                    <i class='bx bxl-graphql'></i>
-                    <h2>Logos and branded elements</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div>
-                <div class="card">
-                    <i class='bx bxs-paint'></i>
-                    <h2>Posters, banners and signage</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div>
-                <div class="card">
-                    <i class='bx bx-desktop'></i>
-                    <h2>Social media graphics & digital marketing ads</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div>
-                <div class="card">
-                    <i class='bx bx-envelope'></i>
-                    <h2>Email marketing graphics</h2>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex mollitia inventore ipsam, voluptatum
-                        odit facilis.</p>
-                </div> -->
             </div>
         </div>
     </section>
-
+ 
     <!---------------------------------- PROJECTS SECTION -------------------->
     <section class="projects-section" id="projects">
         <div class="wrapper">
-            <h1 class="heading"> <span>O</span>ur <span>P</span>rojects</h1>
-            <nav>
-                <div class="items">
-                    <span class="item active" data-name="all">All</span>
-                    <span class="item" data-name="Grpahic Designing">Grpahic Designing</span>
-                    <span class="item" data-name="Posters">Posters</span>
-                    <span class="item" data-name="Logos">Logos</span> 
-                    <span class="item" data-name="Video Editing">Video Editing</span>
-                    <span class="item" data-name="Brochures">Brochures</span>
-                </div>
-            </nav> 
+            <h1 class="heading"> <span>O</span>ur <span>P</span>rojects</h1> 
             <div class="projects">
                 <?php
-                    // Database Connection
-                    // $db = mysqli_connect('localhost','root','','graphic');
-
-                    // Check Connection
-                    // if(!$db){
-                    //     die("Connection Failed".mysqli_connect_error());
-                    // }
-                    // else{
-                    //     // echo "Connection Successful.....";
-                    // }
 
                     // read data from projects table
-                    // $projects = mysqli_query($db,"SELECT * FROM `projects`");
+                    $projects = mysqli_query($db,"SELECT * FROM `projects`");
 
-                    // if(!$projects){
-                    //     die("Invalid Query !!!".mysqli_connect_error());
-                    // }
-                    // else{
-                    //     // read data of each row
-                    //     while($row = mysqli_fetch_assoc($projects)){
-                    //         echo"
-                    //         <div class='project' data-name='$row[topic]'>
-                    //             <span><img src='./admin-panel/data_base-images/$row[image]'></span>
-                    //             <h4>$row[title]</h4>
-                    //             <p>$row[description]/p>
-                    //             <a href='#' class='btn'>More Info</a>
-                    //         </div>
-                    //         ";
-                    //     }
-                    // }
+                    if(!$projects){
+                        die("Invalid Query !!!".mysqli_connect_error());
+                    }
+                    else{
+                        // read data of each row
+                        while($row = mysqli_fetch_assoc($projects)){
+                            $data = $row['description'];
+                            $substring = substr($data,0,100);
+                            $description = $substring."...";
+                            echo"
+                            <div class='project' data-name='$row[category]'>
+                                <span><img src='./admin-panel/data_base-images/projects/$row[image]'></span>
+                                <h4>$row[title]</h4>
+                                <p>$description</p>
+                                <a href='./single-page.php?id=$row[id]' class='btn'>More Info</a>
+                            </div>
+                            "; 
+                        }
+                    }
                 ?>
-                <div class="project" data-name="Grpahic Designing">
-                    <span><img src="./images/projects/graphic1.jpg" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Posters">
-                    <span><img src="./images/projects/poster1.avif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Logos">
-                    <span><img src="./images/projects/logo1.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Video Editing">
-                    <span><img src="./images/projects/video1.jpg" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Brochures">
-                    <span><img src="./images/projects/brochure1.webp" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Grpahic Designing">
-                    <span><img src="./images/projects/graphic2.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Posters">
-                    <span><img src="./images/projects/poster2.avif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Logos">
-                    <span><img src="./images/projects/logo2.png" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Video Editing">
-                    <span><img src="./images/projects/video2.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Brochures">
-                    <span><img src="./images/projects/brochure2.webp" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Grpahic Designing">
-                    <span><img src="./images/projects/grpahic3.jpg" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Posters">
-                    <span><img src="./images/projects/poster3.avif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Logos">
-                    <span><img src="./images/projects/logo3.webp" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Brochures">
-                    <span><img src="./images/projects/brochure3.webp" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Grpahic Designing">
-                    <span><img src="./images/projects/grpahic4.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Posters">
-                    <span><img src="./images/projects/poster4.avif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Logos">
-                    <span><img src="./images/projects/logo4.png" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Brochures">
-                    <span><img src="./images/projects/brochure4.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Grpahic Designing">
-                    <span><img src="./images/projects/graphic5.jpg" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div> 
-                <div class="project" data-name="Posters">
-                    <span><img src="./images/projects/poster5.jpg" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div>
-                <div class="project" data-name="Brochures">
-                    <span><img src="./images/projects/brochure5.jfif" alt=""></span>
-                    <h4>Project 1</h4>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cum modi iusto quos ab quod
-                        saepe? Reiciendis vel ullam dolore?
-                    </p>
-                    <a href="#" class="btn">More Info</a>
-                </div> 
+            </div>
+            <div class="button">
+                <a href="./projects.php">See All</a>
             </div>
         </div>
     </section>
@@ -450,7 +206,7 @@
             <div class="col">
                 <i class="fa-solid fa-code"></i>
                 <span class="num" data-val="106">000</span>
-                <span class="text">Projects</span>
+                <span class="text">Projects</span> 
             </div>
             <div class="col">
                 <i class="fa-regular fa-face-smile"></i>
@@ -478,22 +234,11 @@
             </div>
             <i class="fa-solid fa-chevron-left prev"></i>
             <i class="fa-solid fa-chevron-right next"></i>
-
+ 
             <div class="teams">
                 <?php 
-                    // Database Connection
-                    $db = mysqli_connect('localhost','root','','graphic');
-                    
-                    // Check Connection
-                    if(!$db){
-                        die("Connection Failed!!!".mysqli_connect_error());
-                    }
-                    else{
-                        // echo "Connected Succesfully";
-                    }
-
-                    // read the data from users table
-                    $teams = mysqli_query($db,"SELECT * FROM `users`");
+                    // read the data from teams table
+                    $teams = mysqli_query($db,"SELECT * FROM `teams`");
 
                     if(!$teams){
                         die("Invalid Query !!!".mysqli_connect_error());
@@ -503,118 +248,24 @@
                         while($row = mysqli_fetch_assoc($teams)){
                             echo "
                             <div class='team-member'>
-                            <div class='image-content'>
-                                <span class='overlay'></span>
-        
-                                <div class='card-image'>
-                                    <img src='./admin-panel/data_base-images/$row[image]' class='card-img'>
+                                <div class='image-content'>
+                                    <span class='overlay'></span>
+                            
+                                    <div class='card-image'>
+                                        <img src='./admin-panel/data_base-images/teams/$row[image]' class='card-img'>
+                                    </div>
+                                </div>
+                                <div class='card-content'>
+                                    <h2 class='name'>$row[name]</h2>
+                                    <p class='description'>$row[description]</p>
+                            
+                                    <button class='button'>View More</button>
                                 </div>
                             </div>
-        
-                            <div class='card-content'>
-                                <h2 class='name'>$row[name]</h2>
-                                <p class='description'>$row[description]</p>
-        
-                                <button class='button'>View More</button>
-                            </div>
-                        </div>
                             ";
                         }
                     }
                 ?>
-                <!-- <div class="team-member">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-
-                        <div class="card-image">
-                            <img src="./images/teams/p2.png" alt="" class="card-img">
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h2 class="name">Can Yaman</h2>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae
-                            tempora odit beatae soluta dolor, vel autem amet molestiae molestias obcaecati ducimus quis,
-                            magni provident error nulla commodi porro mollitia a.</p>
-
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-
-                <div class="team-member">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-
-                        <div class="card-image">
-                            <img src="./images/teams/p3.png" alt="" class="card-img">
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h2 class="name">Harshavardhan</h2>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae
-                            tempora odit beatae soluta dolor, vel autem amet molestiae molestias obcaecati ducimus quis,
-                            magni provident error nulla commodi porro mollitia a.</p>
-
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-
-                <div class="team-member">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-
-                        <div class="card-image">
-                            <img src="./images/teams/p4.png" alt="" class="card-img">
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h2 class="name">Arman Malik</h2>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae
-                            tempora odit beatae soluta dolor, vel autem amet molestiae molestias obcaecati ducimus quis,
-                            magni provident error nulla commodi porro mollitia a.</p>
-
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-
-                <div class="team-member">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-
-                        <div class="card-image">
-                            <img src="./images/teams/p5.png" alt="" class="card-img">
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h2 class="name">Rishi</h2>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae
-                            tempora odit beatae soluta dolor, vel autem amet molestiae molestias obcaecati ducimus quis,
-                            magni provident error nulla commodi porro mollitia a.</p>
-
-                        <button class="button">View More</button>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="image-content">
-                        <span class="overlay"></span>
-
-                        <div class="card-image">
-                            <img src="./images/teams/p6.png" alt="" class="card-img">
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h2 class="name">Darshan Raval</h2>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae
-                            tempora odit beatae soluta dolor, vel autem amet molestiae molestias obcaecati ducimus quis,
-                            magni provident error nulla commodi porro mollitia a.</p>
-
-                        <button class="button">View More</button>
-                    </div>
-                </div> -->
             </div>
         </div>
     </section>
@@ -782,13 +433,13 @@
                     <form action="./admin-panel/feedback/form.php" method="post" enctype="multipart/form-data">
                         <h2>Send Message</h2>
                         <div class="inputbox">
-                            <input type="text" name="name" id="name" placeholder="Full Name" required="required" >
+                            <input type="text" name="name" id="name" placeholder="Full Name" required>
                         </div>
                         <div class="inputbox">
-                            <input type="email" name="email" id="email" placeholder="Email" required="required" >
+                            <input type="email" name="email" id="email" placeholder="Email" required>
                         </div>
                         <div class="inputbox">
-                            <textarea required="required" name="message" id="message" placeholder="Type your message......"></textarea>
+                            <textarea name="message" id="message" placeholder="Type your message......" required></textarea>
                         </div>
                         <div class="inputbox">
                             <input type="submit" name="submit" id="submit" value="Send">

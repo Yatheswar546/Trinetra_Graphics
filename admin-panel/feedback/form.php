@@ -1,19 +1,20 @@
 <?php
-    $db = mysqli_connect('localhost','root','','graphic');
+    // $db = mysqli_connect('localhost','root','','graphic'); 
+    require('../config.php');
 
     if(!$db){
         die("Connection Failed!!!".mysqli_connect_error());
-    }
+    } 
     else{
         // echo "Hurray Connection Successful";
     }
-
+    
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $message = $_POST['message'];   
+    $message = addslashes($_POST['message']);   
     
 
-    $sql = mysqli_query($db,"INSERT INTO `feedbacks`(`name`, `email`, `message`) VALUES ('$name','$email','$message ')");
+    $sql = mysqli_query($db,"INSERT INTO `feedbacks`(`name`, `email`, `message`) VALUES ('$name','$email','$message')");
 
     if(!$sql){
         $errormsg = "Invalid Query".mysqli_connect_error();

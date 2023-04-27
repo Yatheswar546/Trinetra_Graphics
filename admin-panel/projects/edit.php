@@ -1,12 +1,16 @@
 <?php 
+    session_start();
+    if($_SESSION['id'] == true){
 
-    $db = mysqli_connect('localhost','root','','graphic');
+    // Database Connection
+    require_once('../config.php');
 
     $id = "";
     $title = "";
     $body = "";
     $developer = "";
-    $topic = "";
+    $category = "";
+    $famous = "";
     $file = "";
     
     $errormsg = "";
@@ -30,9 +34,10 @@
         }
         $title = $row['title'];
         $body = $row['description'];
-        $file = $row['image'];
         $developer = $row['developer'];
-        $topic = $row['topic'];
+        $file = $row['image'];
+        $category = $row['category'];
+        $famous = $row['famous'];
     }
     else{
         // POST Method : Update the data
@@ -40,8 +45,9 @@
         $title = $_POST['title'];  
 	    $body = $_POST['body'];
         $developer = $_POST['developer'];
-        $topic = $_POST['topic'];
-        $target = "../data_base-images/"; 
+        $category = $_POST['category'];
+        $famous = $_POST['famous'];
+        $target = "../data_base-images/projects"; 
         $filename = $_FILES['image']['name'];
         $filetype = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype);
@@ -54,7 +60,7 @@
                 break;
             }
             else{
-                $result = mysqli_query($db,"UPDATE `projects` SET `title`='$title',`description`='$body',`image`='$file',`developer`='$developer',`topic`='$topic',`projectid`='$projectid' WHERE id=$id");
+                $result = mysqli_query($db,"UPDATE `projects` SET `title`='$title',`description`='$body',`image`='$file',`developer`='$developer',`category`='$category',`famous`='$famous',`projectid`='$projectid' WHERE id=$id");
 
                 if(!$result){
                     $errormsg = "Invalid Query...".mysqli_connect_error();
@@ -99,7 +105,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home' ></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -134,14 +140,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -164,7 +176,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -195,8 +207,8 @@
                         <input type="text" name="title" id="title" class="text-input" value="<?php echo $title; ?>">
                     </div>
                     <div>
-                        <label>Body</label>
-                        <input type="text" name="body" id="body" class="text-input" value="<?php echo $body; ?>">
+                        <label>Description</label>
+                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
                     </div>
                     <div>
                         <label>Image</label>
@@ -207,13 +219,20 @@
                         <input type="text" name="developer" id="developer" class="text-input" value="<?php echo $developer; ?>">
                     </div>
                     <div>
-                        <label>Topic</label>
-                        <select name="topic" class="text-input" value="<?php echo $topic; ?>">
+                        <label>category</label>
+                        <select name="category" class="text-input" value="<?php echo $category; ?>">
                             <option value="Graphic Designing">Graphic Designing</option>
                             <option value="Video Editing">Video Editing</option>
                             <option value="Logo">Logo</option>
-                            <option value="Poster Making">Poster Making</option>
-                            <option value="Brochure">Brochure</option>
+                            <option value="Posters">Poster Making</option>
+                            <option value="Brochures">Brochure</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Post on Famous Projects</label>
+                        <select name="famous" class="text-input" value="<?php echo $famous; ?>">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
                         </select>
                     </div>
 
@@ -238,6 +257,11 @@
         </div>
     </div>
 
+    <!----- CkEditor 5 Script -------------------->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+
+    <!-- Custom Js Script -->
+    <script src="../../js/admin.js"></script>
 
     <script>
         //MenuToggle
@@ -261,3 +285,10 @@
     </script>
 </body>
 </html>
+
+<?php
+    }
+    else{
+        header('Location: ../../index.php');
+    }
+?>

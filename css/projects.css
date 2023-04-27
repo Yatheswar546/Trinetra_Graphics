@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+:root{
+    --violet: #7f00ff;
+    --white: #fff;
+    --grey: #f5f5f5; 
+    --black1: #222;
+    --black2: #999;
+}
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+body{
+	margin: 0;
+	padding: 0;
+}
+
+/******* ALL PROJECTS SECTION ***********/
+.all-projects{
+	position: relative;
+    top: 0;
+    width: 100%;
+	border: 5px solid white;
+}
+.all-projects .wrapper {
+    margin: 50px auto;
+    max-width: 90%;
+}
+.all-projects .wrapper .filter{
+	padding: 25px;
+	/* border: 5px solid blue; */
+}
+.all-projects .wrapper .filter span{
+	text-align: center;
+    font-size: 28px;
+    padding: 15px;
+    margin: 10px;
+    color: #3e304b;
+}
+.all-projects .wrapper .filter select{
+	font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+}
+.all-projects .wrapper .container{
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.all-projects .wrapper .container .table{
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 1.5rem;
+	/* border: 10px solid darkmagenta; */
+}
+th, td{
+    padding: 15px;
+    text-align: left;
+    border-bottom:  1px solid lightgrey;
+}
+
+.all-projects .projects {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.all-projects .projects .project {
+    padding: 7px;
+    height: 450px;
+    margin: 5px;
+    border: 2px solid #7f00ff;
+    border-radius: 15px;
+}
+
+.all-projects .projects .project span {
+    width: 300px;
+    height: 300px;
+}
+
+.all-projects .projects .project span img {
+    width: inherit;
+    height: inherit;
+}
+
+.all-projects .projects .project h4 {
+    padding: 5px;
+    margin-left: 20px;
+    font-size: 25px;
+}
+
+.all-projects .projects .project p {
+    padding: 5px;
+    margin-left: 20px;
+    padding-bottom: 13px;
+}
+
+.all-projects .projects .project .btn {
+    padding: 10px;
+    margin: 22px;
+    background-color: #7f00ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.all-projects .projects .project .btn:hover {
+    background: linear-gradient(to right, #803fd6, #da38ec);
+    color: #fff;
+}
+ 
+/*********** FOOTER SECTION *************/
+.footer .footer-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.footer .footer-container h3 {
+    position: relative;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.footer .footer-container h3::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #da38ec;
+}
+@media(max-width:991px) {
+    .footer .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:600px) {
+    .footer .container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -1,62 +1,80 @@
-<?php
+ <?php 
     session_start();
-    if($_SESSION['id'] == true){
+    if($_SESSION['access'] == 1){
 
     // Database Connection
     require_once('../config.php');
-    
+
+    $id = "";
     $username = "";
     $email = "";
     $phone = "";
-    $body = "";
     $file = "";
     $role = "";
 
     $errormsg = "";
     $successmsg = "";
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+        // GET Method : Show the Data
+        if(!isset($_GET["id"])){
+            header("location: index.php");
+            exit;
+        }
+
+        $id = $_GET["id"];
+        // Read the Data
+        $result = mysqli_query($db,"SELECT * FROM `users` WHERE id=$id");
+        $row = $result->fetch_assoc();
+
+        if(!$row){
+            header("Location: index.php");
+            exit;
+        }
+        $username = $row['username'];
+        $email = $row['email'];
+        $phone = $row['phoneno'];
+        $file = $row['image'];
+        $role = $row['role'];
+    }  
+    else{
+        // POST Method : Update the data
+        $id = $_POST['id'];
         $username = $_POST['username'];
 	    $email = $_POST['email'];
         $phone = $_POST['phone'];
-        $body = $_POST['body']; 
         $role = $_POST['role'];
-        $target = "../data_base-images/teams/";
+        $target = "../data_base-images/users/";
         $filename = $_FILES['image']['name'];
         $filetype = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION)); // filetype
-        $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype); //target final path
+        $target_file = $target.basename(md5("userid".$_FILES['image']['name']).".".$filetype); //target path
         $file = md5("userid".$_FILES['image']['name']).".".$filetype; // file created
-        $teamid = md5(substr($username,0,3).substr($email,0,3).random_int(10000,99999));
- 
+        
+        $duplicate = mysqli_query($db,"SELECT * FROM users WHERE username = '$username' OR email = '$email'");
+
         do{
-            if( empty($username) || empty($email) || empty($phone) || empty($body) || empty($file)){
+            if(empty($id) || empty($username) || empty($email) || empty($phone) || empty($role) || empty($file)){
                 $errormsg = "All Fields are required !!!";
-                break;
+                break; 
             }
             else{
-                if($filetype == "png" || $filetype == "jpg" || $filetype == "jpeg"){
-                    if(move_uploaded_file($_FILES['image']['tmp_name'],$target_file)){
-                        $sql = mysqli_query($db,"INSERT INTO `teams`(`name`, `email`, `phoneno`, `description`, `image`, `teamid`, `role`) VALUES ('$username','$email','$phone','$body','$file','$teamid','$role')");
-                        if($sql){
-                            $successmsg = "You have successfully Added a Team Member";
-                            header("Location: index.php");
-                            exit;
-                        } 
-                        else{
-                            $errormsg = "Something went wrong!!!";
-                        }
-                    }
-                    else{
-                        $errormsg = "Image not moved!!";
-                    }
+                $result = mysqli_query($db,"UPDATE `users` SET `username`='$username',`email`='$email',`phoneno`='$phone',`image`='$file',`role`='$role' WHERE id=$id");
+
+                if(!$result){
+                    $errormsg = "Invalid Query...".mysqli_connect_error();
+                    break;
                 }
                 else{
-                    $errormsg = "Image not accepted";
+                    $successmsg = "User Updated Succesfully";
+
+                    header("Location: index.php");
+                    exit;
                 }
             }
-        }while(false);
+        }while(false);    
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en"> 
@@ -165,12 +183,12 @@
         <!-- Admin Content -->
         <div class="admin-content">
             <div class="button-group">
-                <a href="./create.php" class="admin-btn btn-blg">Add Member</a>
-                <a href="./index.php" class="admin-btn btn-blg">Manage Teams</a>
+                <a href="./create.php" class="admin-btn btn-blg">Edit User</a>
+                <a href="./index.php" class="admin-btn btn-blg">Manage Users</a>
             </div>
 
             <div class="content"> 
-                <h2 class="page-title">Add Team Member</h2>
+                <h2 class="page-title">Edit Team Member</h2>
 
                 <?php 
                     if(!empty($errormsg)){
@@ -179,10 +197,11 @@
                                 <strong>$errormsg</strong>
                             </div>
                         ";
-                    }
+                    } 
                 ?>
 
                 <form action="#" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div>
                         <label>Name</label>
                         <input type="text" name="username" class="text-input" value="<?php echo $username; ?>">
@@ -196,21 +215,19 @@
                         <input type="text" name="phone" class="text-input" value="<?php echo $phone; ?>">
                     </div>
                     <div>
-                        <label>Description</label> 
-                        <textarea name="body" id="body" value="<?php echo $body; ?>"></textarea>
-                    </div>
-                    <div>
                         <label>Image</label>
                         <input type="file" name="image" class="text-input" value="<?php echo $file; ?>">
                     </div>
                     <div>
                         <label>Role</label>
                         <select name="role" class="text-input" value="<?php echo $role; ?>">
-                            <option value="Developer">Developer</option>
-                            <option value="Grpahic Designer">Grpahic Designer</option>
-                            <option value="Video Editor">Video Editor</option>
-                            <option value="Animator">Animator</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
                         </select>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter Password">
                     </div>
 
                     <?php 
@@ -224,7 +241,7 @@
                     ?>
 
                     <div>
-                        <button type="submit" class="admin-btn btn-blg">Add Member</button>
+                        <button type="submit" class="admin-btn btn-blg">Edit User</button>
                         <a href="./index.php" class="admin-btn btn-blg">Cancel</a>
                     </div>
                 </form>
@@ -234,11 +251,6 @@
         </div>
     </div>
 
-    <!----- CkEditor 5 Script -------------------->
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
-
-    <!-- Custom Js Script -->
-    <script src="../../js/admin.js"></script>
 
     <script>
         //MenuToggle
@@ -266,6 +278,6 @@
 <?php
     }
     else{
-        header("Location: ../../index.php");
+        header("Location: ./index.php");
     }
 ?>

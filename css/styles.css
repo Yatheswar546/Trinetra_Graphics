@@ -27,7 +27,7 @@ html {
 /********************* NAVBAR SECTION *********************/
 .banner-container {
     width: 100%;
-    min-height: 100vh;
+    min-height: auto;
     background-color: #f3f5f8;
     /* border: 3px solid red; */
 }
@@ -98,7 +98,7 @@ html {
 .banner-container nav .links a {
     font-size: 25px;
     color: #3d535f;
-    margin: 0px 13px;
+    margin: 0px 13px; 
     text-decoration: none;
     /* border: 1px solid red; */
 }
@@ -195,6 +195,7 @@ html {
     align-items: center;
     padding: 0 10%;
     overflow: hidden;
+    /* border: 3px solid red; */
 }
 
 .banner-container .wrapper::before {
@@ -237,12 +238,13 @@ html {
 
 .banner-container .wrapper .cols {
     width: 50%;
+    /* border: 10px solid yellow; */
 }
 
 .banner-container .wrapper .cols.cols0 {
     width: 60%;
     z-index: 5;
-    /* border: 1px solid red; */
+    /* border: 1px solid green; */
 }
 
 .banner-container .wrapper .topline {
@@ -323,11 +325,51 @@ html {
     height: 500px;
 }
 
+@media (max-width: 990px){
+    .banner-container .wrapper .cols.cols0{
+        width: 90%;
+    }
+
+    .banner-container .wrapper .cols.cols1{
+        display: none;
+    }
+}
+
 @media (max-width: 540px){
     .banner-container .wrapper{
         position: relative;
         top: 100px;
         display: block;
+    }
+}
+
+@media (max-width: 400px) {
+    .banner-container .wrapper::before{
+        position: absolute;
+        content: '';
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        left: -12%;
+        top: 40%;
+        background: linear-gradient(45deg, #7f00ff, pink);
+        animation: object1 6s linear infinite;
+    }  
+    .banner-container .wrapper::after {
+        position: absolute;
+        content: '';
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        left: 35%;
+        top: 12%;
+        background: linear-gradient(45deg, #7f00ff, pink);
+        animation: object2 6s linear infinite;
+    } 
+    .banner-container .wrapper .btns {
+        width: 100%;
+        position: relative;
+        left: 68px;
     }
 }
 /********************** RECENT PROJECTS **********************/
@@ -403,7 +445,7 @@ html {
     top: -0px;
     width: 100%;
     min-height: 70vh;
-    /* border: 3px solid red; */
+    /* border: 3px solid blue; */
 }
 
 .about-section .container {
@@ -562,6 +604,8 @@ html {
 
 @media screen and (max-width:420px) {
     .about-section {
+        position: relative;
+        top: 100px;
         min-height: 80vh;
     }
 }
@@ -707,13 +751,21 @@ html {
     }
 }
 
+@media(max-width: 991px){
+    .services{
+        position: relative;
+        top: 100px;
+        min-height: 290vh;
+    }
+}
+
 
 /********************** PROJECTS SECTION ******************/
 .projects-section {
     position: relative;
     top: 0;
     width: 100%;
-    /* border: 2px solid black; */
+    /* border: 3px solid red; */
 }
 
 .projects-section .wrapper {
@@ -828,6 +880,25 @@ html {
     animation: animate 0.4s ease;
 }
 
+.projects-section .button{
+    text-align: center;
+}
+
+.projects-section .button a {
+    background-color: #7f00ff;
+    color: #f1f1f1;
+    padding: 10px 35px;
+    text-decoration: none;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+}
+
+.projects-section .button a:hover {
+    background: linear-gradient(to right, #803fd6, #da38ec);
+    color: #fff;
+}
+
 @keyframes animate {
     0% {
         transform: scale(0.5);
@@ -868,7 +939,7 @@ html {
     top: 0;
     width: 100%;
     min-height: 50vh;
-    /* border: 4px solid red; */
+    /* border: 4px solid blue; */
 }
 
 .counting .row {
@@ -911,12 +982,31 @@ html {
     display: block;
 }
 
+@media (max-width: 400px){
+    .counting{
+        position: relative;
+        top: 0px;
+        min-height: 77vh;
+    }
+    .counting .row {
+        width: 100%;
+        height: fit-content;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(to right, #803fd6, #da38ec);
+    }
+}
+
 /**************************** TEAMS SECTION *************************/
 .team {
     position: relative;
     top: -100px;
     width: 100%;
-    min-height: 90vh;
+    min-height: 80vh;
     /* border: 3px solid green; */
 }
 
@@ -1115,7 +1205,11 @@ html {
 
 @media screen and (max-width: 480px) {
     .team {
-        min-height: 70vh;
+        position: relative;
+        top: 30px;
+        width: 100%;
+        min-height: 90vh;
+        /* border: 3px solid green; */
     }
 }
 
@@ -1128,6 +1222,9 @@ html {
 @media screen and (max-width: 380px) {
     .team {
         min-height: 100vh;
+    }
+    .team .title{
+        margin-left: -56px;
     }
 }
 
@@ -1233,16 +1330,27 @@ html {
     filter: blur(0px)
 }
 
+@media (max-width: 400px){
+    .testimonials h1{
+        font-size: 40px;
+        margin-left: -30px;
+    }
+    .testimonials .container{
+        width: 80%;
+    }
+}
+
 /************************** CONTACT US SECTION *************************/
 .contact {
     position: relative;
-    top: -50px;
+    top: -90px;
     min-height: 100vh;
     padding: 50px 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    /* border: 3px solid green; */
 }
 
 .contact .contact-details {
@@ -1378,6 +1486,7 @@ footer {
     align-content: end;
     min-height: 10vh;
     margin-bottom: 0px;
+    /* border: 3px solid red; */
 }
 
 .footer {
@@ -1389,7 +1498,7 @@ footer {
     padding: 50px 100px;
     background-color: #4f039c;
 }
-
+ 
 .footer .container {
     width: 100%;
     display: grid;

@@ -1,3 +1,8 @@
+<?php
+    session_start();
+    if($_SESSION['id'] == true){
+?>
+
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -26,7 +31,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home' ></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -61,14 +66,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -91,7 +102,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -108,6 +119,7 @@
                     <thead>
                         <th>S. No.</th>
                         <th>Project Title</th>
+                        <th>Category</th>
                         <th>Pic</th>
                         <th>Developer</th>
                         <th colspan="3">Action</th>
@@ -115,7 +127,7 @@
                     <tbody>
                         <?php 
                             // Database Connection
-                            $db = mysqli_connect('localhost','root','','graphic');
+                            require_once('../config.php');
 
                             // Check Connetion
                             if(!$db){
@@ -125,7 +137,7 @@
                                 // echo "Connected Successfully";
                             }
 
-                            // read the data from users table
+                            // read the data from teams table
                             $result = mysqli_query($db,"SELECT * FROM `projects`");
 
                             if(!$result){
@@ -139,7 +151,8 @@
                                     <tr>
                                         <td>$row[id]</td>
                                         <td>$row[title]</td>
-                                        <td><img src='../data_base-images/$row[image]'></td>
+                                        <td>$row[category]</td>
+                                        <td><img src='../data_base-images/projects/$row[image]'></td>
                                         <td>$row[developer]</td>
                                         <td><a href='./edit.php?id=$row[id]' class='edit'>Edit</a></td>
                                         <td><a href='./delete.php?id=$row[id]' class='delete'>Delete</a></td>
@@ -180,3 +193,10 @@
     </script>
 </body>
 </html>
+
+<?php
+    }
+    else{
+        header('Location: ../../index.php');
+    }
+?>

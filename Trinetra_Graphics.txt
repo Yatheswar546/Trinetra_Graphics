@@ -1,0 +1,32 @@
+Projects:
+
+The following project is to create a poster of Pravishree Company.  Pravishree is a start-up company which deals with graphic designing, brichures, logos, poster making, video-editing, photoshop works, event promotions, digital marketing & all other kinds of marketing & graphic designing works. They are all famous for their website works. They have done several websites before some of them are https://sohithsohantravles.com, https://bhaskardesigns.in & many more. For the case of web development they use WordPress & Tech stack like HTML, CSS, Js, Php, MySql. They are well know for they perfection in works & submission of works on time. The name Pravishree represents the three persons i.e. Praveen, Vishnu, Shree. Pravishree Designs are well famous for their works & had so much of positive feedback from clients.
+
+The following project is to create a poster of Pravishree Company.  Pravishree is a start-up company which deals with graphic designing, brichures, logos, poster making, video-editing, photoshop works, event promotions, digital marketing & all other kinds of marketing & graphic designing works. They are all famous for their website works. They have done several websites before some of them are https://sohithsohantravles.com, https://bhaskardesigns.in & many more. For the case of web development they use WordPress & Tech stack like HTML, CSS, Js, Php, MySql. They are well know for they perfection in works & submission of works on time. The name Pravishree represents the three persons i.e. Praveen, Vishnu, Shree. Pravishree Designs are well famous for their works & had so much of positive feedback from clients.
+
+The following project is to create a poster of Pravishree Company.  Pravishree is a start-up company which deals with graphic designing, brichures, logos, poster making, video-editing, photoshop works, event promotions, digital marketing & all other kinds of marketing & graphic designing works. They are all famous for their website works. They have done several websites before some of them are https://sohithsohantravles.com, https://bhaskardesigns.in & many more. For the case of web development they use WordPress & Tech stack like HTML, CSS, Js, Php, MySql. They are well know for they perfection in works & submission of works on time. The name Pravishree represents the three persons i.e. Praveen, Vishnu, Shree. Pravishree Designs are well famous for their works & had so much of positive feedback from clients.
+
+<?php 
+    $data = $row['description'];
+    $substring = substr($data,0,50);
+?>
+<p><?php echo $substring."..."?></p>
+
+SERVICES:
+Brochures, rack cards & booklets  - We do all kind of brochures , rack cards & booklets at an affordable price of your choice  <i class='bx bx-bookmarks'></i>
+ 
+Business cards, letterhead & envelopes - Business cards & letter heads to promte your business   <i class='bx bxs-envelope-open'></i>
+
+Logos and branded elements  - Branded Logos with excellent designs  <i class='bx bxl-graphql'></i>
+
+Posters, banners and signage  - Poster & Banners for all kind of occassions & promotions  <i class='bx bxs-paint'></i>
+
+Social media graphics & digital marketing ads  - Digital Marketing & Promotions for your businesses  <i class='bx bx-desktop'></i>
+
+Email marketing graphics  - Email Marketing & Graphical Works  <i class='bx bx-envelope'></i>
+
+Teams
+
+
+
+

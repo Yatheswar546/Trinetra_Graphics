@@ -17,33 +17,6 @@ $(document).ready(function () {
     });
 });
 
-// Projects Filter
-//  Selecting all required elements
-const filterItem = document.querySelector(".items");
-const filterImg = document.querySelectorAll(".project");
-
-window.onload = () => { // once window loaded 
-    filterItem.onclick = (selectedItem) => { // when user clicked on filteritem div
-        if(selectedItem.target.classList.contains("item")){  // if user click element has .item class
-            filterItem.querySelector(".active").classList.remove("active"); //remove the active class which is in the first element
-            selectedItem.target.classList.add("active"); //add that active class on the user selected element or item
-            let filterName = selectedItem.target.getAttribute("data-name"); //getting data name value of the user selected item and storing in a filter name variable
-            filterImg.forEach((image)=>{
-                let filterImages = image.getAttribute("data-name");  // getting image data-name value
-                // if user selected item data-name value is equal to image data-name value
-                // or user selected item data-name value is equal to "all"
-                if((filterImages == filterName) || filterName == "all"){
-                    image.classList.remove("hide");
-                    image.classList.add("show");
-                } else{
-                    image.classList.add("hide");
-                    image.classList.remove("show");
-                }
-            });
-        } 
-    }
-}
-
 // Projects  Carousel
 $(document).ready(function () {
     $('.projects').slick({
@@ -176,3 +149,41 @@ function checkbox(){
 
     }
 }
+
+
+//////////// Projects Page ///////////////
+let selectMenu = document.querySelector("#products");
+let category = document.querySelector(".right h2");
+let container = document.querySelector(".product-wrapper");
+
+selectMenu.addEventListener("change", function(){
+	let categoryName = this.value;
+	category.innerHTML = this[this.selectedIndex].text;  
+
+	let http = new XMLHttpRequest();
+	http.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status == 200){
+			let response = JSON.parse(this.responseText);
+			// let response = this.responseText;
+			let out = "";
+			for(let item of response){
+				out += `
+					<div class="product">
+						<div class="left">
+							<img src="${item.image}" alt="">
+						</div>
+						<div class="right">
+							<p class="title">${item.title}</p>
+							<p class="price">${item.developer}</p>
+							<p class="description">${item.description}</p>
+						</div>
+					</div>
+				`;
+			}
+			container.innerHTML = out;
+		};
+	}	
+	http.open('POST', "script.php", true);
+	http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+	http.send("category="+categoryName);
+});

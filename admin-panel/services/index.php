@@ -1,9 +1,14 @@
+<?php
+    session_start();
+    if($_SESSION['id'] == true){
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive admin dashboard</title>
 
@@ -29,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../admin.html">
+                    <a href="../admin.php">
                         <span class="icon"><i class='bx bx-home'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -64,14 +69,20 @@
                         <span class="title">Projects</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="../../../index.php">
+                <li>
+                    <a href="../users/index.php">
+                        <span class="icon"><i class="fa-regular fa-circle-user"></i></span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../logout.php">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
                         <span class="title">Sign Out</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
-                    <a href="../../index1.php">
+                    <a href="../../index.php">
                         <span class="icon"><i class="fa-sharp fa-solid fa-house"></i></span>
                         <span class="title">Back to Home</span>
                     </a>
@@ -94,7 +105,7 @@
                 </label>
             </div>
             <div class="user">
-                <img src="../images/p1.png">
+                <?php echo "<img src='../data_base-images/users/{$_SESSION['image']}'>"; ?>
             </div>
         </div>
 
@@ -118,8 +129,8 @@
                     </thead>
                     <tbody>
                         <?php
-                            // Create Connection
-                            $db = mysqli_connect('localhost','root','','graphic');
+                            // Database Connection
+                            require_once('../config.php');
 
                             // Check Connection
                             if(!$db){
@@ -183,3 +194,10 @@
 </body>
 
 </html>
+
+<?php
+    }
+    else{
+        header('Location: ../../index.php');
+    }
+?>

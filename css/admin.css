@@ -8,7 +8,7 @@
 :root{
     --violet: #7f00ff;
     --white: #fff;
-    --grey: #f5f5f5; 
+    --grey: #f5f5f5;  
     --black1: #222;
     --black2: #999;
 }
@@ -461,7 +461,7 @@ a{
         left: initial;
         color: #fff;
     }
-}
+}  
 
 /************** ADMIN CONTENT ********************/
 .admin-content{
@@ -499,7 +499,7 @@ th, td{
 .publish{
     color: blue;
 }
-.edit:hover,
+.edit:hover, 
 .delete:hover,
 .publish:hover{
     text-decoration: underline;
@@ -529,7 +529,7 @@ th, td{
 
 /********** MESSAGES (ERROR & SUCCESS) ****/
 .error_msg
-{
+{   
     padding: 5px;
     color: #fff;
     background: rgb(229, 58, 58);
