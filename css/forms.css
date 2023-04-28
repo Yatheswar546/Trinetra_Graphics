@@ -146,7 +146,7 @@ nav .links a.user:hover {
     }
 
     nav {
-        background: black;
+        /* background: black; */
     }
 
     nav .nav-items li a {
@@ -288,6 +288,13 @@ nav .links a.user:hover {
 .wrapper .link {
     margin: 20px;
     text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .wrapper{
+        position: absolute;
+        top: 75%;
+    }
 }
 
 /********** MESSAGES (ERROR & SUCCESS) ****/

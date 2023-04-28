@@ -85,3 +85,43 @@ html{
     background: linear-gradient(to right, #803fd6, #da38ec);
     color: #fff;
 }
+
+@media (max-width: 400px){
+    .projects{
+        max-width: 100%;
+    }
+    .projects .project span{
+        margin-left: -90px;
+    }
+    .projects .project span img{
+        float: none;
+        height: 300px;
+        width: 300px;
+        border-radius: 10%;
+        box-shadow: 0 0 20px 9px rgba(163, 20, 211, 0.813);
+    }
+    .projects .project-banner h1{
+        width: 50%;
+        margin-left: 10px;
+        font-size: 37px;
+        color: #3d535f;
+    }
+    .projects .description{
+        width: 400%;
+        margin-left: -100px;
+    }
+    .projects .project .date{
+        margin-left: -100px;
+        width: 400%;
+    }
+    .projects .project .developer{
+        margin-left: -100px;
+        width: 400%;
+    }
+    .projects .button{
+        float: none;
+        margin-top: 50px;
+        margin-left: -100px;
+        width: 400%;
+    }
+}

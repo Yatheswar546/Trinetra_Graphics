@@ -78,7 +78,7 @@
         <input type="checkbox" id="check" onclick="checkbox()">
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
-        </label>
+        </label> 
     </nav>
 
     <!------------- HEADING ---------------->

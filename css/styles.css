@@ -1331,6 +1331,15 @@ html {
 }
 
 @media (max-width: 400px){
+    .testimonials {
+        position: relative;
+        top: -100px;
+        width: 100%;
+        min-width: 60vh;
+        background: linear-gradient(to right, #803fd6, #da38ec);
+        padding: 30px;
+        /* border: 5px solid red; */
+    }
     .testimonials h1{
         font-size: 40px;
         margin-left: -30px;
