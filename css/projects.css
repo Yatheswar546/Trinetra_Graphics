@@ -24,9 +24,9 @@ body{
 /******* ALL PROJECTS SECTION ***********/
 .all-projects{
 	position: relative;
-    top: 0;
+    top: 0px;
     width: 100%;
-	/* border: 5px solid red; */
+	border: 5px solid red;
 }
 .all-projects .wrapper {
     margin: 50px auto;

@@ -1338,7 +1338,7 @@ html {
         min-width: 60vh;
         background: linear-gradient(to right, #803fd6, #da38ec);
         padding: 30px;
-        /* border: 5px solid red; */
+        /* border: 5px solid red; */ 
     }
     .testimonials h1{
         font-size: 40px;
